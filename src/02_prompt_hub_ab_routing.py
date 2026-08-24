@@ -160,15 +160,24 @@ def ask_ab(retriever, llm, prompt, question: str, version: str) -> dict:
 def setup_vectorstore():
     embeddings  = get_embeddings()
     text        = load_knowledge_base()
+
+
+# ── 7. Setup Vectorstore (tái sử dụng logic Bước 1) ───────────────────────
+def setup_vectorstore():
+    embeddings  = get_embeddings()
+    text        = load_knowledge_base()
     chunks      = split_text(text)
     return build_vectorstore(chunks, embeddings)
 
 
 # ── 8. Main ────────────────────────────────────────────────────────────────
 def main():
-    print("=" * 60)
-    print("  Bước 2: Prompt Hub & A/B Routing")
-    print("=" * 60)
+    # Ensure UTF-8 output on Windows
+    sys.stdout.reconfigure(encoding="utf-8")
+    
+    print("=" * 60, flush=True)
+    print("  Bước 2: Prompt Hub & A/B Routing", flush=True)
+    print("=" * 60, flush=True)
 
     if not config.validate():
         sys.exit(1)
@@ -199,10 +208,10 @@ def main():
             v1_count += 1
         else:
             v2_count += 1
-        print(f"[{i+1:02d}] [prompt-{version_tag}] {question[:55]}...")
+        print(f"[{i+1:02d}] [prompt-{version_tag}] {question[:55]}...", flush=True)
 
-    print(f"\n📊 Routing: V1={v1_count} câu | V2={v2_count} câu | Tổng={len(SAMPLE_QUESTIONS)}")
-    print("✅ Bước 2 hoàn thành! Kiểm tra Prompt Hub và traces trên LangSmith.")
+    print(f"\n📊 Routing: V1={v1_count} câu | V2={v2_count} câu | Tổng={len(SAMPLE_QUESTIONS)}", flush=True)
+    print("✅ Bước 2 hoàn thành! Kiểm tra Prompt Hub và traces trên LangSmith.", flush=True)
 
 
 if __name__ == "__main__":

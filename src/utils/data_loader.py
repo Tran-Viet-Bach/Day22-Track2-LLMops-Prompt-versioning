@@ -8,7 +8,14 @@ Cách dùng:
     chunks      = split_text(text, chunk_size=500, chunk_overlap=50)
     vectorstore = build_vectorstore(chunks, embeddings)
 """
+import sys
 from pathlib import Path
+
+# Ensure UTF-8 output on Windows
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 
 def load_knowledge_base(path: str = None) -> str:
